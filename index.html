@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Platform</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b071e;
+            --card-bg: rgba(23, 15, 48, 0.6);
+            --primary-purple: #8a2be2;
+            --neon-cyan: #00f0ff;
+            --neon-magenta: #ff007f;
+            --text-white: #ffffff;
+            --text-gray: #9dadcc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', 'Orbitron', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Задний фон с неоновыми сферами */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: var(--primary-purple);
+            filter: blur(150px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+        body::before { top: 10%; left: -100px; background: var(--neon-magenta); }
+        body::after { top: 60%; right: -100px; background: var(--neon-cyan); }
+
+        /* Шапка сайта */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(11, 7, 30, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Переключатель языка */
+        .lang-switch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lang-btn {
+            background: var(--card-bg);
+            color: var(--text-white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .lang-options {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 40px;
+            background: #170f30;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            width: 120px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .lang-options div {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .lang-options div:hover {
+            background: var(--primary-purple);
+        }
+
+        /* Главный блок (Hero) */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 80px 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-gray);
+            font-size: 18px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Большая кнопка призыва (CTA) */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(90deg, var(--primary-purple), var(--neon-magenta));
+            color: var(--text-white);
+            text-decoration: none;
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(255, 0, 127, 0.8);
+        }
+
+        .cta-btn i {
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+
+        .cta-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Сетка преимуществ */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .card i {
+            font-size: 40px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--primary-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Статистика / Траст */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 40px 20px;
+            background: rgba(23, 15, 48, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .stat-item h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            color: var(--neon-cyan);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            color: var(--text-gray);
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        /* Подвал */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(157, 173, 204, 0.4);
+            font-size: 12px;
+        }
+
+        /* Адаптивность для мобилок */
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            .hero p { font-size: 15px; }
+            .cta-btn { width: 100%; justify-content: center; font-size: 18px; }
+            .stats { flex-direction: column; gap: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">MuskBetting</div>
+        
+        <!-- Кнопка переключения языков -->
+        <div class="lang-switch">
+            <button class="lang-btn" onclick="toggleLangMenu()">
+                <i class="fa-solid fa-globe"></i> <span id="current-lang">한국어</span> <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
+            </button>
+            <div class="lang-options" id="lang-options">
+                <div onclick="changeLanguage('ko')">한국어 (KR)</div>
+                <div onclick="changeLanguage('en')">English (EN)</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="badge" id="txt-badge">🔥 2026 차세대 플랫폼</div>
+            <h1 id="txt-title">최고의 웹3 <span>크립토 게이밍</span>의 시작</h1>
+            <p id="txt-desc">단 1초만의 신속한 입출금, 블록체인 기반의 100% 공정한 알고리즘. 지금 가입하고 한정판 웰컴 보너스를 지갑으로 즉시 수령하세요.</p>
+            
+            <!-- ССЫЛКА ТУТ: Замени '#' внутри href="" на свою партнерскую ссылку -->
+            <a href="https://muskbetting.com/?promo=puk" class="cta-btn" id="txt-btn">
+                <span id="txt-btn-inner">지금 바로 시작하기</span> <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </section>
+
+        <section class="stats">
+            <div class="stat-item">
+                <h4>$4.2M+</h4>
+                <p id="stat-1">총 지급액</p>
+            </div>
+            <div class="stat-item">
+                <h4>24/7</h4>
+                <p id="stat-2">실시간 지원</p>
+            </div>
+            <div class="stat-item">
+                <h4>Instant</h4>
+                <p id="stat-3">자동 출금 시스템</p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3 id="f1-title">보안 및 익명성</h3>
+                <p id="f1-desc">개인정보 입력 없는 완전한 익명 보장. 오직 당신의 가상화폐 지갑만으로 안전하게 이용하세요.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3 id="f2-title">초고속 무제한 환전</h3>
+                <p id="f2-desc">지ру한 대기 시간은 끝났습니다. 트랜잭션 컨펌 즉시 보상액이 개인 지갑으로 전송됩니다.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-gift"></i>
+                <h3 id="f3-title">9999달러 상당의 무료 증정</h3>
+                <p id="f3-desc">일론 머스크로부터 입금을 받으세요. 매일 캐시백과 특별한 로열티 혜택을 누리세요.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Muskbetting Platform. All rights reserved. 18+ Only.</p>
+    </footer>
+
+    <!-- Скрипт переключения языков -->
+    <script>
+        const translations = {
+            ko: {
+                langName: "한국어",
+                badge: "🔥 2026 차세대 플랫폼",
+                title: "최고의 웹3 <span>크립토 게이밍</span>의 시작",
+                desc: "단 1초만의 신속한 입출금, 블록체인 기반의 100% 공정한 알고리즘. 지금 가입하고 한정판 웰컴 보너스를 지갑으로 즉시 수령하세요.",
+                btn: "지금 바로 시작하기",
+                stat1: "총 지급액",
+                stat2: "실시간 지원",
+                stat3: "자동 출금 시스템",
+                f1_title: "보안 및 익명성",
+                f1_desc: "개인정보 입력 없는 완전한 익명 보장. 오직 당신의 가상화폐 지갑만으로 안전하게 이용하세요.",
+                f2_title: "초고속 무제한 환전",
+                f2_desc: "지루한 대기 시간은 끝났습니다. 트랜잭션 컨펌 즉시 보상액이 개인 지갑으로 전송됩니다.",
+                f3_title: "9999달러 상당의 무료 증정",
+                f3_desc: "일론 머스크로부터 입금을 받으세요. 매일 캐시백과 특별한 로열티 혜택을 누리세요."
+            },
+            en: {
+                langName: "English",
+                badge: "🔥 Next-Gen 2026 Platform",
+                title: "The Ultimate Web3 <span>Crypto Gaming</span> Experience",
+                desc: "Instant deposits & withdrawals, 100% provably fair blockchain algorithms. Join now and receive an exclusive welcome bonus directly to your wallet.",
+                btn: "Get Started Now",
+                stat1: "Total Payouts",
+                stat2: "Live Support",
+                stat3: "Instant Payouts",
+                f1_title: "Secured & Anonymous",
+                f1_desc: "No KYC, completely anonymous. Play securely using only your decentralized crypto wallet.",
+                f2_title: "Lightning Fast Cashouts",
+                f2_desc: "No more waiting for approvals. Your winnings are sent immediately upon transaction confirmation.",
+                f3_title: "9999$ Give away",
+                f3_desc: "Receive a deposit from Elon Musk. Enjoy daily cashbacks and exclusive loyalty rewards."
+            }
+        };
+
+        function toggleLangMenu() {
+            const menu = document.getElementById('lang-options');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function changeLanguage(lang) {
+            document.getElementById('current-lang').innerText = translations[lang].langName;
+            document.getElementById('txt-badge').innerText = translations[lang].badge;
+            document.getElementById('txt-title').innerHTML = translations[lang].title;
+            document.getElementById('txt-desc').innerText = translations[lang].desc;
+            document.getElementById('txt-btn-inner').innerText = translations[lang].btn;
+            document.getElementById('stat-1').innerText = translations[lang].stat1;
+            document.getElementById('stat-2').innerText = translations[lang].stat2;
+            document.getElementById('stat-3').innerText = translations[lang].stat3;
+            document.getElementById('f1-title').innerText = translations[lang].f1_title;
+            document.getElementById('f1-desc').innerText = translations[lang].f1_desc;
+            document.getElementById('f2-title').innerText = translations[lang].f2_title;
+            document.getElementById('f2-desc').innerText = translations[lang].f2_desc;
+            document.getElementById('f3-title').innerText = translations[lang].f3_title;
+            document.getElementById('f3-desc').innerText = translations[lang].f3_desc;
+            
+            document.getElementById('lang-options').style.display = 'none';
+            document.documentElement.lang = lang;
+        }
+
+        // Закрывать меню выбора языка при клике в любом другом месте
+        window.onclick = function(event) {
+            if (!event.target.matches('.lang-btn') && !event.target.matches('.fa-globe') && !event.target.matches('#current-lang')) {
+                document.getElementById('lang-options').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
